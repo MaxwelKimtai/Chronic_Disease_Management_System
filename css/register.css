@@ -1,0 +1,430 @@
+/* --- Global Styles & Setup (Maximized Compactness & Glassmorphism) --- */
+:root {
+    --color-primary: #007bff; /* Medical Blue */
+    --color-secondary: #adb5bd; /* Light grey for inactive steps */
+    --color-text-dark: #343a40;
+    --color-glass-background: rgba(255, 255, 255, 0.3); /* Slightly more opaque glass background */
+    --color-progress-active: #28a745; /* **NEW: Primary Action Green (Save & Next) (Used for Buttons)** */
+    --color-active-tab-indicator: #007bff; /* **NEW: Blue for Active Step Underline** */
+    --color-tab-inactive-text: #6c757d; /* Darker grey for inactive tab text */
+    --shadow-main: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Sharper shadow for better 'lift' */
+    --border-radius-main: 12px; /* Slightly larger radius for premium feel */
+    --border-glass: 1px solid rgba(255, 255, 255, 0.4); 
+    --font-size-base: 0.95rem; 
+    --gap-minimal: 8px; /* Standardizing minimal gaps */
+    --form-field-border: 1px solid rgba(0, 0, 0, 0.15); /* Define a default field border */
+    --color-input-text: #212529; /* Near black text for better contrast on white inputs */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-text-dark); /* Default text color */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    /* Assume background image is still being used */
+    background: url('../assets/bg.jpg') no-repeat center center fixed; 
+    background-size: cover;
+    overflow: hidden; /* CRITICAL: Prevents ALL scrolling on large screens */
+    padding: 20px;
+}
+
+.page-overlay {
+    position: fixed; /* Stay in place */
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    background: rgba(0, 0, 0, 0.75); /* Semi-transparent dark overlay */
+    z-index: 0; /* Behind form content */
+    pointer-events: none; /* Clicks go through to the form */
+}
+
+/* --- Container (Main Glass Panel) --- */
+.registration-container {
+    width: 95%; 
+    max-width: 950px; /* Current requested width */
+    height: 90vh; 
+    max-height: 750px; 
+    border-radius: var(--border-radius-main);
+    /* Set container background to pure white as seen in the design, and remove blur/glass effect on the main panel */
+    background-color: #e0ebf1; 
+    backdrop-filter: none; 
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Adjusted for solid-white panel */
+    border: none; /* Remove glass border */
+    
+    overflow: hidden; /* Keep content contained */
+    position: relative;
+    padding: 0; /* Remove padding from main container, use it inside the form-panel */
+    display: flex; 
+    flex-direction: column; 
+    z-index: 1; 
+}
+
+/* --- Form Panel (Wraps the form content) --- */
+.form-panel {
+    width: 100%; /* Takes full container width */
+    padding: 30px; /* Internal padding for the whole form content */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Allows form fields to scroll */
+    flex-grow: 1; 
+    position: relative; 
+    overflow-x: hidden; /* Keep content contained */
+}
+
+.form-title {
+    /* OVERRIDING previous 'display: none;' */
+    display: block; 
+    
+    font-size: 1.8rem; /* Large and prominent title */
+    font-weight: 700;
+    color: var(--color-text-dark); /* Dark text for high contrast */
+    margin-bottom: 25px; /* Generous space before the step indicator starts */
+    padding-top: 5px; /* A little extra space below the logo */
+}
+
+
+.step-indicator {
+    display: flex;
+    justify-content: space-between; /* KEY CHANGE: Scatter tabs across the full width */
+    align-items: flex-end; 
+    margin-bottom: 12px; 
+    padding: 0; 
+    border-bottom: 1px solid var(--color-separator); 
+    flex-shrink: 0; 
+}
+
+/* **MODIFIED: Individual Step** */
+.step {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    text-align: left;
+    padding: 0 0 10px 0; 
+    cursor: pointer;
+    margin-right: 0; /* KEY CHANGE: Removed margin to allow space-between to control spacing */
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px; 
+    transition: color 0.2s;
+}
+
+/* Remove progress bar elements */
+.progress-bar-track, .progress-bar {
+    display: none;
+}
+
+/* **REFINED: Icon/Circle Styling** */
+.step-number {
+    width: 20px;
+    height: 20px;
+    line-height: 18px; /* Adjusted line-height to center text/icon */
+    margin-right: 8px;
+    font-size: 0.9rem;
+    color: transparent; /* Text is invisible by default */
+    border-radius: 50%;
+    border: 1px solid var(--color-tab-inactive-text); /* Light grey border for inactive */
+    text-align: center;
+    font-family: "Font Awesome 6 Free"; /* Assume FA for icons */
+}
+
+/* **REFINED: Step Name Text** */
+.step-name {
+    font-size: 1rem; 
+    color: var(--color-tab-inactive-text);
+    font-weight: 500;
+}
+
+/* **REFINED: ACTIVE Step Icon** */
+.step.active .step-number {
+    content: '\f00c'; /* Checkmark icon */
+    font-weight: 900;
+    color: white;
+    background-color: var(--color-primary); /* Blue filled circle */
+    border-color: var(--color-primary);
+    font-size: 0.7rem; 
+}
+
+/* ACTIVE Step Text */
+.step.active .step-name {
+    color: var(--color-text-dark); 
+    font-weight: 600;
+}
+
+/* **REFINED: Active indicator line** */
+.step.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; /* Position exactly on top of the step-indicator's 1px border */
+    left: 0;
+    width: 100%; 
+    height: 2px;
+    background-color: var(--color-active-tab-indicator);
+    transition: all 0.3s ease;
+}
+
+/* **REFINED: Completed Step (Uses same blue checkmark as active, but without the line)** */
+.step.complete .step-number {
+    content: '\f00c';
+    font-weight: 900;
+    color: white;
+    background-color: var(--color-primary); 
+    border-color: var(--color-primary);
+    font-size: 0.7rem;
+}
+
+.step.complete .step-name {
+    color: var(--color-text-dark);
+    font-weight: 500; /* Slightly less bold than active */
+}
+
+/* Hide the active indicator on completed steps that are not the currently selected tab */
+.step.complete:not(.active)::after {
+    display: none;
+}
+
+/* -------------------- Form Fields (Design adjustments) -------------------- */
+.field-group {
+    margin-bottom: 15px; /* Increased vertical spacing between field groups */
+}
+
+.field-group label {
+    font-weight: 500;
+    margin-bottom: 5px; 
+    font-size: 0.9rem; /* Slightly larger label font */
+    color: #495057; /* Slightly darker grey for label */
+}
+
+.field-row {
+    display: flex;
+    gap: 20px; /* Increased gap between fields in a row */
+    margin-bottom: 10px;
+}
+
+.half-width {
+    flex: 1;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="tel"],
+input[type="date"], 
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px; /* More padding */
+    border: 1px solid #ced4da; /* Subtle border */
+    border-radius: 4px; /* Less rounded corners */
+    font-size: 1rem; /* Standard font size */
+    background-color: #f8f9fa; /* Very light grey background as seen in design */
+    color: var(--color-input-text);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary); /* Thin, sharp focus ring */
+    outline: none;
+    background-color: white; /* Opaque white on focus */
+}
+
+/* --- Specific Field Adjustments for the Design --- */
+
+/* Gender Toggle Buttons (Emulate the visual style) */
+.gender-selector {
+    display: flex;
+    gap: 0; /* Buttons touch */
+}
+
+.gender-button {
+    flex: 1;
+    text-align: center;
+    padding: 8px 15px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.gender-button:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.gender-button:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.gender-button.active {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+/* Contact Number Radio Buttons (if using radio buttons for Home/Mobile/Work) */
+.contact-type-group {
+    display: flex;
+    gap: 15px;
+    padding-top: 5px;
+    font-size: 0.9rem;
+}
+
+.contact-type-group label {
+    font-weight: 400;
+    color: var(--color-text-dark);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.contact-type-group input[type="radio"] {
+    margin-right: 0;
+}
+
+/* -------------------- Button Navigation (CRITICAL: Design Match) -------------------- */
+.button-row {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin-top: 30px; 
+    gap: 15px; 
+    padding-top: 15px; /* Space from form fields above */
+    border-top: 1px solid #e9ecef; /* Subtle top separator for button bar */
+}
+
+.primary-button, .secondary-button {
+    padding: 10px 25px; 
+    border: none;
+    border-radius: 4px; /* Less rounded corners */
+    font-size: 1rem; 
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+    flex: 0 1 auto; /* Allow buttons to size based on content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.primary-button {
+    /* Save & Next / Complete Registration -> Green from the design */
+    background-color: var(--color-progress-active);
+    color: white;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3); /* Green shadow for prominence */
+    /* Add the arrow icon for next step if possible (using JS/HTML, but CSS for style) */
+}
+
+.primary-button:hover {
+    background-color: #1e7e34;
+    transform: translateY(-1px);
+}
+
+.secondary-button {
+    /* Cancel / Back -> Subtle Light Grey/White from the design */
+    background-color: white; 
+    color: #6c757d; /* Dark grey text */
+    border: 1px solid #ced4da;
+    box-shadow: none; /* No shadow */
+}
+
+.secondary-button:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+    transform: none; /* No lift effect on secondary button */
+}
+
+.final-submit {
+    /* Alias for primary-button, ensuring it's green */
+    background-color: var(--color-progress-active);
+}
+
+.final-submit:hover {
+    background-color: #1e7e34;
+}
+
+/* Hide step title within the form to prevent redundancy with the tab indicator */
+.form-step h3 {
+    display: none;
+}
+
+
+/* --- Media Queries (COMPACT MOBILE VIEW) --- */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto; 
+        align-items: flex-start; 
+    }
+
+    .registration-container {
+        width: 95%; 
+        max-width: none; 
+        height: auto; 
+        max-height: none;
+        margin: 20px auto; 
+        padding: 0;
+        overflow-y: visible; 
+    }
+    
+    .form-panel {
+        padding: 20px;
+    }
+
+    .field-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .button-row {
+        flex-direction: column-reverse; /* Put 'Next'/'Complete' first in the flow */
+        gap: 10px;
+        margin-top: 20px;
+        border-top: none; /* Remove separator on mobile for cleaner look */
+    }
+
+    .primary-button, .secondary-button {
+        flex: 1 1 auto; /* Full width buttons */
+    }
+    
+    .step-indicator {
+        overflow-x: auto; /* Allow scrolling if steps exceed width */
+        white-space: nowrap; /* Prevent wrapping */
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+
+    .step {
+        padding-right: 15px;
+        margin-right: 15px;
+    }
+
+    .step.active::after {
+        width: calc(100% - 15px);
+    }
+}
+
+/* Ensure non-active steps are hidden, and the active step is visible */
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Utility to match the 'Quick Registration' design text */
+.header-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 30px 0 30px; /* Internal padding for the header only */
+}
+
+/* The buttons for Next/Back need to be outside the form in the HTML structure to match the design's bottom bar, or we can use a fixed footer. Since you only provided the HTML for buttons inside the steps, we will keep them as is and rely on the button-row style above.

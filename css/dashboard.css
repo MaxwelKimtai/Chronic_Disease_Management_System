@@ -1,0 +1,1145 @@
+/* Import Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* 🔑 Theme Primary Color: Deep Teal (FINAL DARKNESS ADJUSTMENT) */
+    --primary-blue-vibrant: #4D9A8D; /* Adjusted to be darker and richer */
+    --primary-blue-dark: #3a756b;   /* Corresponding darker shade for hover/active states */
+
+    --primary-green: #4CAF50;
+    --accent-red: #FF4560; 
+    --accent-blue: var(--primary-blue-vibrant); /* Now uses the new, deeper teal globally */
+    --accent-orange: #FF9800;
+
+    /* Text Colors (Optimized for light glass background) */
+    --dark-text: #2c3e50;
+    --medium-text: #5e738d;
+
+    /* 🔮 Glass Properties (Stronger Effect) */
+    --glass-blur: 20px; 
+    --glass-border: rgba(255, 255, 255, 0.4); 
+
+    /* Overwrite original variables with new glass properties */
+    --light-border: rgba(0, 0, 0, 0.1);
+    --lighter-border: var(--glass-border);
+
+    /* Card Background: Lighter translucent white */
+    --card-background: rgba(255, 255, 255, 0.2); 
+
+    /* Updated Shadow (The shadow color will now implicitly coordinate with the lighter theme) */
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2); 
+
+    --border-radius-card: 15px; 
+    --border-radius-tag: 18px;
+    --padding-card: 12px; 
+    --gap-grid: 10px; 
+
+    /* Status Colors */
+    --status-positive: var(--primary-green);
+    --status-negative: var(--accent-red);
+    --status-warning: var(--accent-orange);
+}
+
+/* ----------------------------------------------------------------- */
+/* --- Base & Overall Layout --- */
+/* ----------------------------------------------------------------- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--dark-text);
+    background: #e6e6e6;
+    min-height: 100vh;
+    font-size: 14px;
+    overflow-y: hidden;
+    overflow-x: hidden; 
+}
+
+/* 🖼️ Dashboard Background - Using a fallback gradient for better glass effect */
+#dashboard {
+    background: linear-gradient(135deg, #a0d8ff, #7b68ee); 
+    background-image: url('../assets/bg.jpg'); /* Overwritten by your image if present */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    gap: 18px; 
+}
+
+/* 🔮 Refined Glassmorphism Styles (Cards) */
+.card {
+    background-color: var(--card-background); 
+    border-radius: var(--border-radius-card);
+    padding: 8px 10px;
+    box-shadow: var(--shadow); 
+    /* Use new glass border and blur variable */
+    border: 1px solid var(--lighter-border); 
+    backdrop-filter: blur(var(--glass-blur)); 
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    color: var(--dark-text);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
+}
+.card:hover {
+    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.4);
+    transform: translateY(-2px);
+}
+.card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--dark-text);
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-background);
+    padding: 2px 8px;    
+    margin-top: 15px;    
+    margin-bottom: 10px;      /* Slightly smaller margin */
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--lighter-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    min-height: 50px;         /* Reduced header height */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;                   /* Remove extra space between texts */
+}
+
+.breadcrumbs {
+    font-size: 12px;          /* Smaller text */
+    color: var(--medium-text);
+    opacity: 0.8;
+}
+
+#greeting {
+    font-size: 20px;          /* Smaller greeting */
+    font-weight: 600;
+    margin: 0;
+    color: var(--dark-text);
+}
+
+.date {
+    font-size: 12px;          /* Smaller date text */
+    color: var(--medium-text);
+    opacity: 0.8;
+}
+
+.add-quick-logs-button {
+    background-color: #262fe7;
+    color: #fff;
+    padding: 6px 12px;        /* Smaller button */
+    border-radius: 10px;      /* Slightly smaller rounding */
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;                 /* Smaller gap between icon and text */
+    font-size: 14px;          /* Smaller font */
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    min-width: 120px;         /* Reduce minimum width */
+    justify-content: center;
+}
+
+.add-quick-logs-button:hover {
+    background-color: #262fe7;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12); /* Slightly smaller shadow */
+}
+
+
+/* --------------------------------------------- */
+/* PREMIUM PATIENT CARD — MODERN & MEDICAL UI    */
+/* --------------------------------------------- */
+.patient-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;                   /* slightly larger spacing */
+    
+    padding: 2rem 2.2rem;          /* ⬅️ bigger box */
+    min-height: 400px;             /* ⬅️ increase card height */
+
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Make ALL text inside the card black */
+.patient-card,
+.patient-card * {
+    color: #000 !important;
+}
+
+
+/* HEADER: IMAGE + INFO */
+.patient-header {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+/* PROFILE IMAGE */
+.patient-avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.7);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+}
+
+/* INFO STACK */
+.patient-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+/* NAME + EDIT ICON */
+.patient-name-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.patient-name {
+    font-size: 1.32rem;
+    font-weight: 700;
+    color: #0c2c2c;
+    letter-spacing: 0.4px;
+}
+
+.patient-edit {
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #4D9A8D;
+    opacity: 0.85;
+    transition: 0.2s;
+}
+
+.patient-edit:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* SUB-DETAILS */
+.sub-info {
+    font-size: 0.92rem;
+    color: #2f3e3e;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* STATUS BADGE */
+.status-badge {
+    margin-top: 3px;
+    display: inline-block;
+    padding: 4px 9px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #4D9A8D, #3b7d72);
+    border-radius: 6px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 3px 10px rgba(77,154,141,0.3);
+}
+
+/* Last update timestamp */
+.update-time {
+    font-size: 0.8rem;
+    color: #314545;
+    opacity: 0.9;
+}
+
+/* EXTRA DETAILS */
+.patient-extra {
+    margin-top: 0.3rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    font-size: 0.9rem;
+    color: #2f3e3e;
+}
+
+.patient-extra .label {
+    font-weight: 600;
+    color: #254747;
+}
+
+/* --- Overall Performance Card --- */
+.overall-performance {
+    flex: 1; /* Takes up one part of the space */
+    text-align: center;
+}
+
+.performance-indicator {
+    color: var(--primary-blue-vibrant);
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.arrow {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/* Gauge Styling (Simplified CSS Arc) */
+.gauge-container {
+    position: relative;
+    width: 150x;
+    height: 75px; /* Half of the arc diameter */
+    margin: 30px auto;
+    overflow: hidden; /* Hides the bottom half of the circle */
+}
+
+.gauge-arc {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    /* This creates the purple arc look */
+    background: conic-gradient(
+    var(--primary-blue-vibrant) 0% 85%, 
+    #e0e0e0 85% 100%
+);
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Hide the bottom half to make it a gauge */
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+
+.gauge-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -10%); /* Adjust to center visually */
+    line-height: 1.2;
+}
+
+.avg-score {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.score-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.perfect-tag {
+    font-size: 12px;
+    padding: 3px 8px;
+    background-color: #c8e6c9; /* Light green background */
+    color: #388e3c; /* Dark green text */
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.overall-performance p {
+    font-size: 16px;
+    color: #555;
+    margin: 20px 0;
+}
+
+.full-report-button {
+    background-color: var(--primary-blue-vibrant);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 90%;
+    transition: background-color 0.2s;
+}
+
+.full-report-button:hover {
+    background-color: var(--primary-blue-dark);
+}
+
+/* --- Analytics Card --- */
+.analytics-card {
+    flex: 2; /* Takes up two parts of the space (wider) */
+    display: flex;
+    flex-direction: column;
+}
+
+.time-filter {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.analytics-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 8px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: white;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.tab.active {
+    background-color: var(--primary-blue-vibrant);
+color: white;
+border-color: var(--primary-blue-vibrant);
+}
+
+/* --- Chart Styling (CSS Bar Chart) --- */
+.chart-area {
+    display: flex;
+    height: 180px; /* Chart height */
+}
+
+.y-axis-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 12px;
+    color: #999;
+    height: 100%;
+}
+
+.bar-chart {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end; /* Bars start from the bottom */
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 5px;
+}
+
+.bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    position: relative;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.bar {
+    width: 100%;
+    background-color: rgba(77, 154, 141, 0.4);
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 5px;
+    transition: height 0.5s;
+}
+
+.bar-group.selected .bar {
+    background-color: var(--primary-blue-vibrant);
+}
+
+.bar-group .label {
+    font-size: 12px;
+    color: #666;
+}
+
+.value-tip {
+    position: absolute;
+    top: 0; 
+    /* The value tip should be positioned based on the height of the bar. 
+       This is tricky with simple CSS, so we'll place it above the tallest bar */
+    background-color: var(--primary-blue-vibrant);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    transform: translateY(-10px); /* Lift it above the bar */
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.sidebar {
+    width: 75px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+
+    padding: 18px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-right: none !important;   /* REMOVED LINE */
+    border-radius: 22px;             /* FLOATING */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12); /* FLOATING SHADOW */
+
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+
+/* ---------------- LOGO ---------------- */
+.sidebar-logo {
+    font-size: 28px;
+    color: var(--accent-blue);
+    font-weight: 700;
+
+    /* MODIFIED: Centered in the narrow sidebar */
+    margin: 0 auto 13px auto; 
+    
+    /* MODIFIED: If your logo is text-only, you might want to show only the first letter */
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+
+/* ---------------- ENHANCED SEARCH ---------------- */
+.sidebar-search {
+    /* MODIFIED: Hiding the entire search bar element as per the reference image */
+    display: none; 
+}
+
+.sidebar-search:hover,
+.sidebar-search i,
+.sidebar-search:hover i,
+.sidebar-search input,
+.sidebar-search input::placeholder,
+.sidebar-search input:focus {
+    /* Retained original styles, though this section is now hidden */
+    border: none;
+    background: transparent;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* ---------------- ENHANCED SIDEBAR NAV ---------------- */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    gap: 6px;
+    padding-top: 10px;
+    /* MODIFIED: Allowing vertical scroll for many icons */
+    overflow-y: auto; 
+    overflow-x: hidden;
+    /* MODIFIED: Center the items within the nav container */
+    align-items: center;
+}
+
+/* ---------------- NAV ITEMS ---------------- */
+.sidebar-item {
+    /* MODIFIED: Item width is now 80% of the narrow 75px sidebar */
+    width: 80%; 
+    margin: 0 auto;
+    /* Adjusted padding for a more square, centered look */
+    padding: 12px; 
+    
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark-text);
+    display: flex;
+    /* MODIFIED: Center the icon inside the item, as text will be hidden */
+    align-items: center;
+    justify-content: center; 
+    
+    /* MODIFIED: Removed gap as there is no text */
+    gap: 0; 
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.03);
+    transition: all 0.3s ease;
+    opacity: 0.85;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* HIDE TEXT LABELS */
+.sidebar-item > :not(i):not(.badge) {
+    display: none;
+}
+
+/* ICONS ---------------- */
+.sidebar-item i {
+    /* MODIFIED: Increased size for icon prominence */
+    font-size: 24px; 
+    opacity: 0.85;
+    transition: all 0.3s ease;
+}
+
+/* HOVER STATE ---------------- */
+.sidebar-item:hover {
+    opacity: 1;
+    background-color: rgba(60, 60, 60, 0.08);
+    color: var(--primary-blue-dark);
+    /* MODIFIED: Removed horizontal shift for a stable icon-only feel */
+    transform: none; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ACTIVE STATE — STRONG AND PREMIUM ---------------- */
+.sidebar-item.active {
+    /* MODIFIED: Used the image color (green/teal) for the active state */
+    background-color: var(--accent-blue);
+    color: white;
+    opacity: 1;
+    box-shadow: 0 6px 18px rgba(0,163,131,0.25);
+    /* Added slight scale for a more pronounced 'pop' effect */
+    transform: scale(1.1); 
+}
+
+/* OPTIONAL: BADGE OR NOTIFICATION DOT ---------------- */
+.sidebar-item .badge {
+    /* MODIFIED: Badge must be positioned absolutely or hidden in narrow mode */
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin-left: 0;
+    background-color: var(--accent-red);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 999px;
+    /* Adjusted z-index to ensure visibility */
+    z-index: 10;
+    transform: scale(0.7); /* make badge smaller */
+}
+
+/* SMOOTH TRANSITIONS FOR ALL CHILD ELEMENTS ---------------- */
+.sidebar-item * {
+    transition: all 0.3s ease;
+}
+
+/* ---------------- ENHANCED FOOTER (Sign Out) ---------------- */
+.sidebar-footer {
+    width: 100%;
+    padding: 16px 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255,255,255,0.02);
+}
+
+.sidebar-footer .sidebar-item {
+    color: var(--accent-red);
+    font-weight: 600;
+    width: 85%;
+    /* MODIFIED: Item padding adjusted to match nav items */
+    padding: 12px;
+    border-radius: 14px;
+    display: flex;
+    /* MODIFIED: Center the icon */
+    align-items: center;
+    justify-content: center; 
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.sidebar-footer .sidebar-item:hover {
+    background-color: var(--accent-red);
+    color: #fff;
+    /* MODIFIED: Removed horizontal shift for stability */
+    transform: none; 
+    box-shadow: 0 4px 12px rgba(255,0,0,0.25);
+}
+
+
+
+/* ----------------------------------------------------------------- */
+/* --- Header/Tabs & Badges --- */
+/* ----------------------------------------------------------------- */
+.main-header {
+    margin-bottom: 15px;
+}
+.main-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+.tabs {
+    display: flex;
+    gap: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 3px;
+}
+.tab {
+    color: var(--medium-text);
+    text-decoration: none;
+    padding-bottom: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.tab.active {
+    color: var(--accent-blue); /* Use accent-blue for main tab highlight */
+    border-bottom: 2px solid var(--accent-blue);
+}
+.badge {
+    background-color: var(--status-positive);
+    color: #fff;
+    border-radius: 50%;
+    padding: 0px 4px;
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+/* ----------------------------------------------------------------- */
+/* 📐 Compact Grid Layout (3-Row Structure Retained) */
+/* ----------------------------------------------------------------- */
+.dashboard-grid {
+    display: grid;
+
+    /* FIXED LEFT COLUMN (profile + appointments) + THREE EQUAL RIGHT COLUMNS */
+    grid-template-columns: 300px 1fr 1fr 1fr;
+
+    /* Rows: Top (auto), Chart (auto), Bottom (auto) */
+    grid-template-rows: auto auto auto;
+
+    /* Gap remains from your variables */
+    gap: 6px;
+
+    /* Height behavior preserved */
+    height: auto;
+    min-height: calc(100vh - 180px);
+}
+
+.patient-overview-panel { 
+    grid-column: 1 / 2; 
+    grid-row: 1 / 3; 
+    /* Solid Blue highlight for Patient card */
+    background-color: var(--accent-blue); 
+    color: white; 
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.5); 
+    border: 1px solid var(--accent-blue);
+}
+
+/* Appointments Widget - Column 1, Spans Row 3 (Bottom Left) */
+.appointments-widget { 
+    grid-column: 1 / 2; 
+    grid-row: 3 / 4; 
+    padding: 8px 10px;
+}
+
+
+/* Row 1 (Top Metrics) */
+/* -------------------- */
+/* We are using the next 3 columns for 3 key metrics (Weight, Temp, HR) to match the visual. */
+.metric-card:nth-child(5) { 
+    grid-column: 2 / 3; 
+    grid-row: 1 / 2; 
+    display: flex; /* Ensure it is visible */
+} /* Weight (R1, C2) */
+.metric-card:nth-child(3) { 
+    grid-column: 3 / 4; 
+    grid-row: 1 / 2; 
+    display: flex;
+} /* Temperature (R1, C3) */
+.metric-card:nth-child(2) { 
+    grid-column: 4 / 5; 
+    grid-row: 1 / 2; 
+    display: flex;
+} /* Heart Rate (R1, C4) */
+
+.full-width.timeline { 
+    grid-column: 2 / 5; 
+    grid-row: 2 / 3; 
+}
+
+
+/* Hide unused cards for a cleaner fit, including Quick Actions if they are integrated elsewhere or not used in this layout */
+.quick-actions-panel,
+.metric-card:nth-child(4), 
+.metric-card:nth-child(6), 
+.metric-card:nth-child(7) {
+    display: none; 
+}
+
+
+/* Patient Overview */
+.patient-overview-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.patient-overview-panel h3, .patient-overview-panel p, .patient-overview-panel .edit-icon {
+    color: white !important; /* Force white text on blue card */
+}
+.avatar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.patient-overview-panel h3 {
+    font-size: 16px;
+    margin: 0;
+}
+.patient-details {
+    font-size: 12px;
+    margin: 2px 0;
+}
+.edit-icon {
+    font-size: 12px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.contact-info p {
+    font-size: 12px;
+    margin: 2px 0;
+}
+
+
+/* Metric Cards */
+.metric-card {
+    text-align: center;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.metric-card h4 i {
+    margin-left: 5px;
+    color: var(--accent-blue);
+}
+.metric-value-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    line-height: 1;
+}
+.metric-card .value {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin: 0;
+    color: var(--primary-blue-dark); /* Color for metric values */
+}
+.metric-card .unit {
+    font-size: 0.35em;
+    font-weight: 500;
+    align-self: flex-start;
+    margin-left: 2px;
+    color: var(--dark-text);
+}
+.change {
+    font-size: 0.7em;
+    font-weight: 600;
+    margin-left: 5px;
+    align-self: flex-end;
+}
+.change.positive { color: var(--status-positive); }
+.change.negative { color: var(--status-negative); }
+.status-range {
+    font-size: 11px;
+    color: var(--medium-text);
+    margin-top: 5px;
+}
+.tag {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin: 0 3px;
+}
+.tag.high {
+    background-color: rgba(255, 69, 96, 0.15); /* New softer red background */
+    color: var(--status-negative);
+}
+.tag.low {
+    background-color: rgba(255, 152, 0, 0.15); /* Orange background */
+    color: var(--status-warning);
+}
+.tag.normal {
+    background-color: rgba(76, 175, 80, 0.15); /* Green background */
+    color: var(--status-positive);
+}
+.mini-sparkline {
+    font-size: 10px;
+    color: var(--medium-text);
+    height: 10px;
+}
+
+/* Timeline Chart (Full Width) */
+.timeline {
+    display: flex;
+    flex-direction: column;
+}
+.timeline .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.timeline-controls {
+    display: flex;
+    gap: 10px;
+}
+.timeline-controls select {
+    border: 1px solid var(--light-border);
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 12px;
+    background: var(--card-background);
+    color: var(--dark-text);
+}
+.filter-buttons .filter-btn {
+    background: transparent;
+    border: 1px solid var(--lighter-border);
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 12px;
+    color: var(--medium-text);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.filter-buttons .filter-btn.active, .filter-buttons .filter-btn:hover {
+    background-color: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+.timeline .chart-container {
+    height: 220px; /* FIXED COMPACT SIZE */
+    min-height: 220px; 
+    background-color: rgba(0, 0, 0, 0.03); 
+    display: block; /* STOP flex stretch */
+    border-radius: 8px;
+    overflow: hidden; /* Prevent canvas from overflowing */
+}
+
+#heartbeatChart {
+    width: 100% !important;
+    height: 100% !important;
+    display: block; /* Remove extra inline spacing */
+}
+
+
+
+/* Appointments Widget (Column 1, Row 3) */
+.appointments-widget {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; 
+}
+.appointment-item {
+    border: 1px solid var(--lighter-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.4); /* Reduced opacity for better glass effect */
+}
+.appointment-item:last-child {
+    margin-bottom: 0;
+}
+.appointment-item p {
+    margin: 2px 0;
+    font-size: 12px;
+}
+.appointment-status {
+    font-weight: 600;
+}
+.appointment-status.confirmed { color: var(--status-positive); }
+.appointment-status.pending { color: var(--status-warning); }
+.appointment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+}
+.cta-button {
+    border: none;
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.cta-button.primary { background-color: var(--accent-blue); color: white; }
+.cta-button.secondary { background-color: var(--accent-orange); color: white; }
+.cta-button.danger { background-color: var(--accent-red); color: white; }
+.cta-button:hover { opacity: 0.9; }
+
+.overall-performance {
+    grid-column: 2 / 3;   /* left half of right side */
+    grid-row: 3;
+}
+
+.analytics-card {
+    grid-column: 3 / 5;   /* right half (2 columns wide) */
+    grid-row: 3;
+}
+
+.card, .patient-card, .metric-card, .appointments-widget .appointment-item {
+    padding: 6px 8px; /* compact padding */
+}
+
+.patient-info, .patient-extra, .patient-details, .sub-info {
+    gap: 2px; /* reduce vertical spacing */
+    font-size: 12px; /* smaller text */
+}
+
+.metric-card .metric-value-container {
+    margin: 0; /* remove extra top/bottom margin */
+    line-height: 1; /* tighter vertical alignment */
+}
+h3, h4 {
+    font-size: 14px; /* smaller headers */
+}
+
+.patient-overview-panel h3 {
+    font-size: 14px;
+}
+
+.sub-info, .patient-details, .update-time, .status-range {
+    font-size: 11px;
+}
+
+.metric-card .value {
+    font-size: 1.2em; /* smaller than current 1.6em */
+}
+
+.metric-card .unit {
+    font-size: 0.3em; 
+}
+
+/* ----------------------------------------------------------------- */
+/* --- Media Queries for Responsive Compactness (User's Logic Retained) --- */
+/* ----------------------------------------------------------------- */
+
+/* Tablet/Smaller Desktop - Switch to 2-column layout */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        /* Switch to 2 columns total */
+        grid-template-columns: 1fr 1fr;
+        /* Rows flow more naturally: Patient, Quick Actions, Metrics (2 rows of 2), Timeline, Bottom Widgets (2 rows of 2) */
+        grid-template-rows: auto auto repeat(2, auto) auto 1fr;
+        height: auto;
+        min-height: auto;
+    }
+
+    .sidebar {
+        width: 50px;
+    }
+    .main-content {
+        padding: 15px;
+    }
+    
+    /* Row 1: Patient Overview (Full Width) */
+    .patient-overview-panel { grid-column: 1 / 3; grid-row: 1 / 2; }
+    
+    /* Row 2: Quick Actions (Full Width) */
+    .quick-actions-panel { grid-column: 1 / 3; grid-row: 2 / 3; }
+    
+    /* Rows 3 & 4: Metrics (2x2) */
+    .metric-card:nth-child(2) { grid-column: 1 / 2; grid-row: 3 / 4; }
+    .metric-card:nth-child(3) { grid-column: 2 / 3; grid-row: 3 / 4; }
+    .metric-card:nth-child(4) { grid-column: 1 / 2; grid-row: 4 / 5; }
+    .metric-card:nth-child(5) { grid-column: 2 / 3; grid-row: 4 / 5; }
+    
+    /* Row 5: Timeline (Full Width) */
+    .full-width.timeline { grid-column: 1 / 3; grid-row: 5 / 6; }
+
+    /* Row 6: Bottom Widgets (2x2) */
+    .appointments-widget { grid-column: 1 / 2; grid-row: 6 / 7; }
+    .active-medications-panel { grid-column: 2 / 3; grid-row: 6 / 7; }
+
+    /* Row 7: Final Widgets (2x2) */
+    .lab-summary-panel { grid-column: 1 / 2; grid-row: 7 / 8; }
+    .risk-forecast-panel { grid-column: 2 / 3; grid-row: 7 / 8; }
+
+    /* The following are still hidden to keep the display clean on smaller screens */
+    .metric-card:nth-child(6), .metric-card:nth-child(7) { display: none; } 
+}
+
+/* Mobile Devices - Switch to 1-column layout */
+@media (max-width: 600px) {
+    #dashboard {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid var(--lighter-border);
+        position: static;
+        z-index: 10;
+    }
+    .sidebar-logo {
+        margin-bottom: 0;
+    }
+    .sidebar-item {
+        margin: 0;
+        padding: 8px;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .top-nav-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .search-bar {
+        order: 2;
+        max-width: 100%;
+    }
+    .nav-actions {
+        order: 1;
+    }
+
+    /* All grid items are now full width and stack */
+    .dashboard-grid > .card {
+        grid-column: 1 / 2 !important;
+        grid-row: auto !important;
+    }
+    .metric-card {
+        text-align: left;
+    }
+    .metric-value-container {
+        justify-content: flex-start;
+    }
+}

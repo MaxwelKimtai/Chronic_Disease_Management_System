@@ -1,0 +1,286 @@
+/* --- 🌎 World-Class Color Variables and Setup --- */
+:root {
+    --color-blue-primary: #1C4D78;       /* Deep, authoritative blue */
+    --color-red-problem: #E74C3C;        /* Alert Red/Orange */
+    --color-primary-teal: #38C7D6;       /* Vibrant, modern CTA teal */
+    --color-text-dark: #1E2B2A;          /* Near-black for maximum contrast */
+    --color-white: #FFFFFF;
+    --color-light-grey: #EAEAEA;         /* Subtle off-white for secondary text */
+    --color-content-box: rgba(0, 0, 0, 0.75); /* The desired black box color (75% opacity) */
+    
+    /* Global Transition for smooth interactions */
+    --transition-fast: 0.25s ease-out;
+    --transition-slow: 0.5s ease-in-out;
+    
+}
+/* --- Global Reset and Typography Setup --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Apply smooth transitions globally to specific properties */
+    transition: background-color var(--transition-fast), 
+                color var(--transition-fast), 
+                box-shadow var(--transition-fast), 
+                transform var(--transition-fast),
+                opacity var(--transition-fast); /* Added opacity for smooth fades */
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif; 
+    color: var(--color-white);
+    line-height: 1.6;
+    height: 100%;
+    perspective: 1px; 
+    overflow-x: hidden;
+}
+
+/* ------------------------------------------- */
+/* --- 🌐 Navigation Bar (From Screenshot) --- */
+/* ------------------------------------------- */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    z-index: 1000;
+    background: none; 
+    backdrop-filter: none; /* Optional subtle blur */
+    color: var(--color-white);
+    box-shadow: none;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.logo-text {
+    color: var(--color-white);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a, .btn-contact {
+    color: var(--color-light-grey);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 5px 0;
+    transition: color var(--transition-fast);
+}
+
+.highlight-link {
+    color: var(--color-primary-teal) !important;
+    font-weight: 700 !important;
+}
+
+.btn-contact {
+    background-color: var(--color-primary-teal);
+    color: var(--color-text-dark);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+.btn-contact:hover {
+    background-color: #2CA8B8;
+    transform: translateY(-1px);
+}
+
+/* ------------------------------------------- */
+/* --- 🚀 Slideshow Container & Scrolling --- */
+/* ------------------------------------------- */
+
+.slideshow-container {
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+    scroll-snap-type: y mandatory; 
+    scroll-behavior: smooth; 
+    scrollbar-width: none;  
+}
+
+/* --- Individual Slide Styling --- */
+.slide {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    scroll-snap-align: start; 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    position: relative; 
+    padding: 0 20px;
+}
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;                     /* top:0; bottom:0; left:0; right:0; */
+    background: rgba(0,0,0,0.75); /* dark overlay */
+    z-index: 1;                   /* behind text */
+}
+
+.slideshow-container::-webkit-scrollbar {
+    width: 0;    /* vertical scrollbar */
+    height: 0;   /* horizontal scrollbar */
+}
+
+
+.slide-one { 
+    background-image: url('../assets/background1.jpg'); 
+    background-color: var(--color-blue-primary); 
+}
+.slide-two { 
+    background-image: url('../assets/background2.jpg'); 
+    background-color: #3C6382; /* Fallback */
+}
+.slide-three { 
+    background-image: url('../assets/background3.jpg'); 
+    background-color: #38a782; /* Fallback */
+}
+
+.content-box { 
+    z-index: 2; 
+    position: relative; 
+    transform: translateZ(0); 
+    width: auto; 
+    height: auto;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    
+    /* Apply the dark background to the full screen element */
+    background: none; 
+
+    max-width: 850px;      /* keeps text compact */
+    padding: 0 20px;       /* small side padding only */
+    margin: 0 auto;        /* perfect horizontal centering */
+    text-align: center;
+}
+
+.headline {
+    font-size: 3.5rem; /* Slightly smaller for compactness */
+    font-weight: 900; 
+    line-height: 1.1; /* Adjusted line-height */
+    margin-bottom: 20px; /* Reduced margin */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); 
+}
+
+.subheadline {
+    font-size: 1.3rem; /* Slightly smaller for compactness */
+    font-weight: 300;
+    color: var(--color-light-grey); 
+    margin-bottom: 40px; /* Reduced margin */
+    opacity: 1; 
+}
+
+
+/* ------------------------------------------- */
+/* --- 🎯 Buttons and CTAs (UNIFIED PRIMARY STYLE - Compacted) --- */
+/* ------------------------------------------- */
+
+/* Standardizing all CTA link styles */
+.btn-primary, .cta-scroll, .cta-button { 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Slightly reduced gap */
+    padding: 12px 35px; /* Reduced padding */
+    border-radius: 50px; /* Slightly smaller border radius */
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 1px; 
+    font-size: 1rem; /* Slightly smaller font size */
+    cursor: pointer;
+    background-color: var(--color-primary-teal);
+    color: var(--color-text-dark);
+    box-shadow: 0 5px 15px rgba(56, 199, 214, 0.4); /* Slightly smaller shadow */
+    border: none;
+}
+
+/* Hover effect applied uniformly to ALL buttons */
+.btn-primary:hover, .cta-scroll:hover, .cta-button:hover {
+    background-color: #2CA8B8;
+    transform: translateY(-2px) scale(1.02); 
+    box-shadow: 0 10px 25px rgba(56, 199, 214, 0.6); /* Slightly smaller shadow on hover */
+}
+
+
+/* ------------------------------------------- */
+/* --- 📱 Responsive Adjustments (Refined Compacting) --- */
+/* ------------------------------------------- */
+
+@media (max-width: 1100px) {
+    .content-box { 
+        padding: 80px 50px; /* Adjusted padding for full screen */
+    }
+    .headline {
+        font-size: 3rem; 
+    }
+    .subheadline {
+        font-size: 1.25rem; 
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    .nav-links {
+        display: none; /* Hide standard links on smaller screens */
+    }
+    .content-box { 
+        padding: 50px 30px; /* Adjusted padding for full screen */
+    }
+    .headline {
+        font-size: 2.5rem; 
+        margin-bottom: 15px; /* Reduced */
+    }
+    .subheadline {
+        font-size: 1.1rem; 
+        margin-bottom: 30px; /* Reduced */
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-wrap: wrap; /* Allow navbar items to wrap */
+        justify-content: center;
+        gap: 10px;
+    }
+    .btn-contact {
+        margin-left: 0;
+    }
+    .content-box { 
+        padding: 30px 15px; /* Significantly reduced */
+    }
+    .pre-title {
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+    }
+    .headline {
+        font-size: 1.8rem; /* Even smaller */
+        line-height: 1.2;
+    }
+    .subheadline {
+        font-size: 0.95rem; /* Even smaller */
+        margin-bottom: 25px; 
+    }
+    .btn-primary, .cta-scroll, .cta-button {
+        padding: 10px 20px; 
+        font-size: 0.85rem; 
+    }
+}
