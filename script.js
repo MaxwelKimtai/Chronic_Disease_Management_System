@@ -1,192 +1,165 @@
 document.addEventListener('DOMContentLoaded', initializeForm);
-// Global state variables
+
 let currentStep = 1;
 const totalSteps = 3;
 
-/**
- * Initializes the form and sets up event listeners.
- */
 function initializeForm() {
-    // Get all necessary DOM elements
-    const form = document.getElementById('registrationForm');
+    const form = document.getElementById('multiStepForm');
     const steps = document.querySelectorAll('.form-step');
     const nextButtons = document.querySelectorAll('.next-step');
     const prevButtons = document.querySelectorAll('.prev-step');
-    
-    // Check if the form structure is present
-    if (!form || steps.length === 0) {
-        console.error("Form elements not found. Check if IDs and classes are correct.");
-        return;
-    }
-
-    // Set up button listeners
-    nextButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            handleNextStep();
-        });
-    });
-
-    prevButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            handlePreviousStep();
-        });
-    });
-
-    // Initial render
-    showStep(currentStep);
-}
-
-/**
- * Shows the specified step and hides the others.
- * @param {number} stepNumber - The step number to display.
- */
-function showStep(stepNumber) {
-    const steps = document.querySelectorAll('.form-step');
-    steps.forEach((step, index) => {
-        // Step numbers are 1-indexed, array index is 0-indexed
-        if (index + 1 === stepNumber) {
-            step.classList.add('active');
-        } else {
-            step.classList.remove('active');
-        }
-    });
-    
-    // Update visual indicators
-    updateProgressIndicator(stepNumber);
-    // Ensure button visibility is correct
-    updateButtonVisibility(stepNumber);
-}
-
-/**
- * Updates the visual progress indicators (labels and bar).
- * @param {number} activeStep - The currently active step number.
- */
-function updateProgressIndicator(activeStep) {
-    const progressSteps = document.querySelectorAll('.step');
     const progressBar = document.querySelector('.progress-bar');
-    
-    // 1. Update step classes (active/complete)
-    progressSteps.forEach((step, index) => {
-        const stepNum = index + 1;
 
-        // Reset classes
-        step.classList.remove('active', 'complete');
+    if (!form || steps.length === 0) return console.error("Form elements not found.");
 
-        if (stepNum < activeStep) {
-            step.classList.add('complete');
-        } else if (stepNum === activeStep) {
-            step.classList.add('active');
+    // Next Step Buttons
+    nextButtons.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            if (!validateStep(currentStep)) return;
+
+            const success = await submitStep(currentStep);
+            if (!success) return;
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(steps, progressBar, currentStep);
+            }
+        });
+    });
+
+    // Previous Step Buttons
+    prevButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(steps, progressBar, currentStep);
+            }
+        });
+    });
+
+    // Final Form Submission (Step 3)
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!validateStep(currentStep)) return;
+
+        const success = await submitStep(currentStep);
+        if (success) {
+            alert("Registration complete! Redirecting to login...");
+            window.location.href = 'login.php';
         }
     });
 
-    // 2. Update progress bar width
-    // Formula: (currentStep - 1) / (totalSteps - 1) * 100
-    let progressPercentage = 0;
-    if (totalSteps > 1) {
-        progressPercentage = ((activeStep - 1) / (totalSteps - 1)) * 100;
-    } else {
-        progressPercentage = activeStep === 1 ? 100 : 0; // Handle single step case if needed
-    }
-    
-    // Ensure the progress bar doesn't extend beyond the last step.
-    if (activeStep === totalSteps) {
-        progressPercentage = 100;
-    }
-
-    progressBar.style.width = `${progressPercentage}%`;
+    showStep(steps, progressBar, currentStep);
 }
 
-/**
- * Handles validation and moves to the next step.
- */
-function handleNextStep() {
-    if (currentStep < totalSteps) {
-        if (validateStep(currentStep)) {
-            currentStep++;
-            showStep(currentStep);
-        } else {
-            // Display feedback (using console for simplicity, use a proper UI alert in a real app)
-            console.warn(`Validation failed for Step ${currentStep}. Please fill out all required fields.`);
-            alert(`Please fill out all required fields in Step ${currentStep} before proceeding.`);
-        }
-    } else if (currentStep === totalSteps) {
-        // This is the final step submission logic
-        if (validateStep(currentStep)) {
-            // Placeholder for final submission logic (e.g., API call)
-            alert("Registration Complete! Submitting form data...");
-            // document.getElementById('registrationForm').submit(); // Uncomment this for real submission
-        } else {
-            console.warn(`Validation failed for final Step ${currentStep}.`);
-            alert(`Please fill out all required fields in Step ${currentStep} before submitting.`);
-        }
+// ======================
+// Step Display & Progress
+// ======================
+function showStep(steps, progressBar, stepNumber) {
+    steps.forEach(step => step.classList.toggle('active', parseInt(step.dataset.step) === stepNumber));
+
+    const progressSteps = document.querySelectorAll('.step');
+    progressSteps.forEach(step => {
+        const num = parseInt(step.dataset.step);
+        step.classList.remove('active', 'completed');
+        if (num < stepNumber) step.classList.add('completed');
+        else if (num === stepNumber) step.classList.add('active');
+    });
+
+    if (progressBar) {
+        const percent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
+        progressBar.style.width = `${percent}%`;
     }
 }
 
-/**
- * Handles moving to the previous step.
- */
-function handlePreviousStep() {
-    if (currentStep > 1) {
-        currentStep--;
-        showStep(currentStep);
-    }
-}
-
-/**
- * Simple validation for required fields in the current step.
- * NOTE: For a real application, you need much more robust validation (email format, phone regex, etc.)
- * @param {number} stepNumber - The step number to validate.
- * @returns {boolean} - True if validation passes, false otherwise.
- */
+// ======================
+// Step Validation
+// ======================
 function validateStep(stepNumber) {
-    const currentStepElement = document.querySelector(`.form-step:nth-child(${stepNumber})`);
-    if (!currentStepElement) return true; // Safety check
+    const stepEl = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
+    if (!stepEl) return true;
 
-    const requiredInputs = currentStepElement.querySelectorAll('[required]');
     let isValid = true;
+    const requiredInputs = stepEl.querySelectorAll('[required]');
 
     requiredInputs.forEach(input => {
-        // Check standard input value validity
-        if (!input.value.trim()) {
-            isValid = false;
+        input.style.borderColor = '';
+        if ((input.type !== 'checkbox' && !input.value.trim()) || (input.type === 'checkbox' && !input.checked)) {
             input.style.borderColor = 'red';
-            input.focus();
-        } else {
-            input.style.borderColor = ''; // Reset border color on success
-        }
-        
-        // Specific check for checkbox (terms and conditions)
-        if (input.type === 'checkbox' && !input.checked) {
-             isValid = false;
-             // Note: It's harder to visually highlight a checkbox, 
-             // so rely on the general alert/focus for now.
+            isValid = false;
         }
     });
 
+    // Password checks on step 1
+    if (stepNumber === 1) {
+        const pw = document.getElementById('password');
+        const confirm = document.getElementById('confirm-password');
+
+        if (pw.value.length < 8) {
+            alert('Password must be at least 8 characters.');
+            pw.style.borderColor = 'red';
+            return false;
+        }
+        if (pw.value !== confirm.value) {
+            alert('Passwords do not match.');
+            confirm.style.borderColor = 'red';
+            return false;
+        }
+    }
+
+    if (!isValid) alert('Please fill all required fields.');
     return isValid;
 }
 
-/**
- * Updates the visibility of the Next/Previous/Submit buttons.
- * @param {number} stepNumber - The current step number.
- */
-function updateButtonVisibility(stepNumber) {
-    const prevButton = document.querySelector('.prev-step');
-    const nextButton = document.querySelector('.next-step');
-    const submitButton = document.querySelector('.final-submit');
+// ======================
+// Submit Step via API
+// ======================
+async function submitStep(stepNumber) {
+    const stepEl = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
+    const formData = new FormData(stepEl.closest('form'));
+    const payload = {};
 
-    if (prevButton) {
-        // Show Prev button if not on Step 1
-        prevButton.style.display = (stepNumber > 1) ? 'block' : 'none';
-    }
+    formData.forEach((value, key) => payload[key] = value);
+    payload.step = stepNumber;
 
-    if (nextButton) {
-        // Show Next button if not on the final step
-        nextButton.style.display = (stepNumber < totalSteps) ? 'block' : 'none';
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/patient/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            console.log(`Step ${stepNumber} saved successfully.`);
+            return true;
+        } else {
+            handleErrors(data);
+            return false;
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Network or server error. Please try again.');
+        return false;
     }
-    
-    if (submitButton) {
-        // Show Submit button only on the final step
-        submitButton.style.display = (stepNumber === totalSteps) ? 'block' : 'none';
+}
+
+// ======================
+// Error Handler
+// ======================
+function handleErrors(data) {
+    if (data.errors) {
+        Object.keys(data.errors).forEach(key => {
+            const input = document.querySelector(`[name="${key}"]`);
+            if (input) input.style.borderColor = 'red';
+        });
+        alert('Please fix the highlighted errors.');
+    } else {
+        alert(data.message || 'An error occurred. Please try again.');
     }
 }

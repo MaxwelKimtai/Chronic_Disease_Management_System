@@ -51,10 +51,13 @@ body {
     background: #e6e6e6;
     min-height: 100vh;
     font-size: 14px;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden; 
 }
-
+body::-webkit-scrollbar {
+    width: 0px; /* Remove scrollbar space */
+    background: transparent; /* Optional: just to be safe */
+}
 /* 🖼️ Dashboard Background - Using a fallback gradient for better glass effect */
 #dashboard {
     background: linear-gradient(135deg, #a0d8ff, #7b68ee); 
@@ -162,122 +165,161 @@ body {
 .patient-card {
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;                   /* slightly larger spacing */
+    gap: 1rem;                   /* slightly smaller spacing for compactness */
     
-    padding: 2rem 2.2rem;          /* ⬅️ bigger box */
-    min-height: 400px;             /* ⬅️ increase card height */
+    padding: 1.4rem 1.6rem;      /* tighter padding so content fits nicely */
+    /* min-height: 400px; */     /* remove this */
+    /* height: 100%; */           /* remove this */
 
     background: rgba(255, 255, 255, 0.35);
-    border-radius: 20px;
+    border-radius: 0px;
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     border: 1px solid rgba(255, 255, 255, 0.55);
 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
 }
 
-/* Make ALL text inside the card black */
-.patient-card,
-.patient-card * {
-    color: #000 !important;
+
+/* HEADER BACKGROUND & ACTIONS */
+.patient-header { display: flex; align-items: center; gap: 1.4rem; } /* PROFILE IMAGE */ .patient-avatar { width: 78px; height: 78px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.7); box-shadow: 0 5px 12px rgba(0,0,0,0.12); }
+
+.header-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: flex;
+    gap: 6px;
 }
 
+.action-icon {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.action-icon:hover { color: white; }
 
-/* HEADER: IMAGE + INFO */
-.patient-header {
+.header-info {
     display: flex;
     align-items: center;
-    gap: 1.4rem;
+    gap: 0.6rem;
+    margin-top: 5%;
 }
 
-/* PROFILE IMAGE */
-.patient-avatar {
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid rgba(255,255,255,0.7);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+.header-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0;
+    color: #0f172a;
 }
 
-/* INFO STACK */
-.patient-info {
+.header-details {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 1px;
+    color: #0f172a;
+}
+
+
+.secured-badge {
+    background-color: #29be26;
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+/* Add !important to force override */
+#patientName {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    font-size: 1.15rem !important;
+}
+
+#patientEmail {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+}
+
+
+/* DATA GRID */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem 0.6rem;
+    padding: 10px 0 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.data-item {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    flex: 1;
 }
 
-/* NAME + EDIT ICON */
-.patient-name-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.patient-name {
-    font-size: 1.32rem;
+.data-label {
+    font-size: 0.65rem;
     font-weight: 700;
-    color: #0c2c2c;
-    letter-spacing: 0.4px;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1px;
 }
 
-.patient-edit {
-    font-size: 1.1rem;
-    cursor: pointer;
-    color: #4D9A8D;
-    opacity: 0.85;
-    transition: 0.2s;
+.data-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
 }
 
-.patient-edit:hover {
-    opacity: 1;
-    transform: translateY(-1px);
+.data-value.primary-condition {
+    color: #dc2626;
+    font-weight: 800;
 }
 
-/* SUB-DETAILS */
-.sub-info {
-    font-size: 0.92rem;
-    color: #2f3e3e;
-    opacity: 0.9;
-    margin: 0;
+.data-value.diagnosis-date {
+    color: #0f172a;
+    font-weight: 700;
 }
 
-/* STATUS BADGE */
-.status-badge {
-    margin-top: 3px;
-    display: inline-block;
-    padding: 4px 9px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #ffffff;
-    background: linear-gradient(135deg, #4D9A8D, #3b7d72);
-    border-radius: 6px;
-    letter-spacing: 0.3px;
-    box-shadow: 0 3px 10px rgba(77,154,141,0.3);
+/* LIST SECTIONS */
+.list-section {
+    padding-top: 0.1rem;
 }
 
-/* Last update timestamp */
-.update-time {
-    font-size: 0.8rem;
-    color: #314545;
-    opacity: 0.9;
+.list-header {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #4b5563;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
 }
 
-/* EXTRA DETAILS */
-.patient-extra {
-    margin-top: 0.3rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid rgba(0,0,0,0.07);
-    font-size: 0.9rem;
-    color: #2f3e3e;
+/* TAGS */
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem;
 }
 
-.patient-extra .label {
-    font-weight: 600;
-    color: #254747;
+.list-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #0f172a;
+
 }
 
 /* --- Overall Performance Card --- */
@@ -721,7 +763,7 @@ border-color: var(--primary-blue-vibrant);
     display: grid;
 
     /* FIXED LEFT COLUMN (profile + appointments) + THREE EQUAL RIGHT COLUMNS */
-    grid-template-columns: 300px 1fr 1fr 1fr;
+    grid-template-columns: 300px repeat(4,1fr);
 
     /* Rows: Top (auto), Chart (auto), Bottom (auto) */
     grid-template-rows: auto auto auto;
@@ -751,38 +793,27 @@ border-color: var(--primary-blue-vibrant);
     padding: 8px 10px;
 }
 
-
-/* Row 1 (Top Metrics) */
-/* -------------------- */
-/* We are using the next 3 columns for 3 key metrics (Weight, Temp, HR) to match the visual. */
-.metric-card:nth-child(5) { 
-    grid-column: 2 / 3; 
-    grid-row: 1 / 2; 
-    display: flex; /* Ensure it is visible */
-} /* Weight (R1, C2) */
-.metric-card:nth-child(3) { 
-    grid-column: 3 / 4; 
-    grid-row: 1 / 2; 
-    display: flex;
-} /* Temperature (R1, C3) */
-.metric-card:nth-child(2) { 
-    grid-column: 4 / 5; 
-    grid-row: 1 / 2; 
-    display: flex;
-} /* Heart Rate (R1, C4) */
-
-.full-width.timeline { 
-    grid-column: 2 / 5; 
-    grid-row: 2 / 3; 
+/* Metrics Row */
+.metric-card.weight {
+    grid-column: 2 / 3; /* first metric */
+    grid-row: 1 / 2;
+}
+.metric-card.blood-sugar {
+    grid-column: 3 / 4; /* second metric */
+    grid-row: 1 / 2;
+}
+.metric-card.blood-pressure {
+    grid-column: 4 / 5; /* third metric */
+    grid-row: 1 / 2;
+}
+.metric-card.heart-rate {
+    grid-column: 5 / 6; /* fourth metric */
+    grid-row: 1 / 2;
 }
 
-
-/* Hide unused cards for a cleaner fit, including Quick Actions if they are integrated elsewhere or not used in this layout */
-.quick-actions-panel,
-.metric-card:nth-child(4), 
-.metric-card:nth-child(6), 
-.metric-card:nth-child(7) {
-    display: none; 
+.full-width.timeline { 
+    grid-column: 2 / 6; 
+    grid-row: 2 / 3; 
 }
 
 
@@ -1006,7 +1037,7 @@ border-color: var(--primary-blue-vibrant);
 }
 
 .analytics-card {
-    grid-column: 3 / 5;   /* right half (2 columns wide) */
+    grid-column: 3 / 6;   /* right half (2 columns wide) */
     grid-row: 3;
 }
 
@@ -1042,6 +1073,11 @@ h3, h4 {
 .metric-card .unit {
     font-size: 0.3em; 
 }
+
+.show-card {
+  display: flex !important;
+}
+
 
 /* ----------------------------------------------------------------- */
 /* --- Media Queries for Responsive Compactness (User's Logic Retained) --- */

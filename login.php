@@ -24,18 +24,18 @@
                 <form class="login-form">
                     
                     <div class="field-group">
-                        <input type="text" id="user-id" name="user-id" required placeholder="yourname@healthcare.com">
+                        <input type="email" id="email" name="email" required placeholder="">
                         </div>
 
                     <div class="field-group">
-                        <input type="password" id="password" name="password" required placeholder="**********">
+                        <input type="password" id="password" name="password" required placeholder="">
                         <a href="#" class="forgot-password">Forgot your password?</a>
                     </div>
                     
                     <button type="submit" class="primary-button">Log In</button>
                     
                     <div class="secondary-actions">
-                        <p>Don't have an account? <a href="register.html" class="signup-link">Sign up!</a></p>
+                        <p>Don't have an account? <a href="register.php" class="signup-link">Sign up</a></p>
                         
                         <div class="social-icons">
                        <a href="https://facebook.com" class="social-icon" target="_blank" aria-label="Facebook">
@@ -64,3 +64,37 @@
     
 </body>
 </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.login-form');
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+            const res = await fetch('http://127.0.0.1:8000/api/patient/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                sessionStorage.setItem('api_token', data.token);
+                sessionStorage.setItem('patient', JSON.stringify(data.patient));
+
+                window.location.href = "dashboard.php";
+            } else {
+                alert(data.message || 'Login failed');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Network/server error');
+        }
+    });
+});
+</script>
