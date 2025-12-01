@@ -5,46 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <div id="dashboard">
+
         
         <aside class="sidebar">
-            <div class="sidebar-logo">
-                <i class="fas fa-plus-circle"></i> </div> <div class="sidebar-search">
- 
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search">
-            </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="sidebar-item active" title="Dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a>
-                <a href="#" class="sidebar-item" title="Appointments"><i class="fas fa-calendar-alt"></i> <span>Appointments</span></a>
-                <a href="#" class="sidebar-item" title="Reports & Tests"><i class="fas fa-file-medical-alt"></i> <span>Doctor</span></a>
-                <a href="#" class="sidebar-item" title="Medication"><i class="fas fa-pills"></i> <span>Reports & Tests</span></a>
-                <a href="#" class="sidebar-item" title="Settings"><i class="fas fa-cog"></i> <span>Help</span></a>
-            </nav>
             
-            <div class="sidebar-footer">
-                <a href="#" class="sidebar-item sign-out" title="Sign Out">
-                    <i class="fas fa-sign-out-alt"></i> <span>Sign Out</span>
-                </a>
-            </div>
+             <nav class="sidebar-nav"> 
+    <a href="#" class="sidebar-item active" title="Dashboard"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a> 
+    <a href="#" class="sidebar-item" title="Appointments"><i data-lucide="calendar-days"></i> <span>Appointments</span></a> 
+    <a href="#" class="sidebar-item" title="Reports & Tests"><i data-lucide="stethoscope"></i> <span>Doctor</span></a> 
+    <a href="#" class="sidebar-item" title="Medication"><i data-lucide="pill"></i> <span>Reports & Tests</span></a> 
+    <a href="#" class="sidebar-item" title="Settings"><i data-lucide="settings"></i> <span>Help</span></a> 
+</nav> 
+
+<div class="sidebar-footer"> 
+    <a href="logout.php" class="sidebar-item sign-out" title="Sign Out"> 
+        <i data-lucide="log-out"></i> <span>Sign Out</span> 
+    </a> 
+</div>
+
             </aside>
 
         <main class="main-content">
         <header class="main-header">
-            <div class="header-left">
-                <span class="breadcrumbs">Home / My Dashboard</span>
-                <h1 id="greeting">Good Afternoon</h1>
-                <p class="date" id="currentDate">Loading date...</p>
-            </div>
-            <a href="Add_logs.php" class="add-quick-logs-button">
-                <i class="fas fa-plus"></i> Add Quick Logs
-            </a>
-        </header>
+  <div class="header-left">
+    
+    <!-- Dynamic Greeting -->
+    <h1 class="header-title">Patient Health Dashboard</h1>
+    
+    <!-- Dynamic Current Date -->
+    <p class="date" id="currentDate">Loading date...</p>
+  </div>
+
+  <a href="add_logs.php" class="add-quick-logs-button">
+    <i class="fas fa-plus"></i> Add Quick Logs
+  </a>
+</header>
+
 
             <section class="dashboard-grid">
                 
@@ -112,14 +117,13 @@
 
 
                 <!-- Metric Cards -->
-<div class="metric-card heart-rate bg-white p-2 rounded-lg flex flex-col justify-between high-status" id="heartRateCard" title="Last updated: 10:30 AM">
+<div class="metric-card heart-rate p-2 rounded-lg flex flex-col justify-between high-status glass-card" id="heartRateCard">
 
     <!-- Header -->
     <div class="flex items-center justify-between mb-1">
         <h4 class="text-xs font-semibold text-gray-500">
             Heart Rate (BPM)
         </h4>
-        <i class="fas fa-heart text-lg icon-pulse" style="color: rgb(255, 59, 48);"></i>
     </div>
 
     <!-- Value -->
@@ -147,7 +151,7 @@
 
 </div>
 
-<div class="metric-card blood-sugar bg-white p-2 rounded-lg flex flex-col justify-between" 
+<div class="metric-card blood-sugar p-2 rounded-lg flex flex-col justify-between glass-card" 
      id="bloodSugarCard" 
      title="Last updated: 11:00 AM">
 
@@ -156,7 +160,6 @@
         <h4 class="text-xs font-semibold text-gray-500">
             Blood Sugar (mg/dL)
         </h4>
-        <i class="fas fa-candy-cane text-lg" style="color: rgb(255,149,0);"></i>
     </div>
 
     <!-- Value -->
@@ -187,7 +190,7 @@
 
 </div>
 
-<div class="metric-card blood-pressure bg-white p-2 rounded-lg flex flex-col justify-between"
+<div class="metric-card blood-pressure p-2 rounded-lg flex flex-col justify-between glass-card"
      id="bloodPressureCard"
      title="Last updated: 10:30 AM">
 
@@ -196,7 +199,6 @@
         <h4 class="text-xs font-semibold text-gray-500">
             Blood Pressure
         </h4>
-        <i class="fas fa-gauge-high text-lg" style="color: rgb(0, 122, 255);"></i>
     </div>
 
     <!-- Value -->
@@ -226,7 +228,7 @@
 
 </div>
 
-<div class="metric-card weight bg-white p-2 rounded-lg flex flex-col justify-between"
+<div class="metric-card weight p-2 rounded-lg flex flex-col justify-between glass-card"
      id="weightCard"
      title="Last updated: 10:30 AM">
 
@@ -235,7 +237,6 @@
         <h4 class="text-xs font-semibold text-gray-500">
             Weight
         </h4>
-        <i class="fas fa-weight-scale text-lg" style="color: rgb(52, 199, 89);"></i>
     </div>
 
     <!-- Value -->
@@ -344,6 +345,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
+
+
 
 </body>
 </html>
@@ -352,7 +359,6 @@
 <script>
 const patient = JSON.parse(sessionStorage.getItem('patient'));
 document.getElementById('patientName').textContent = `${patient.first_name} ${patient.last_name}`;
-document.querySelector('.sub-info').textContent = `${patient.gender}, ${patient.age} • Blood Group: ${patient.blood_group}`;
 document.querySelector('.patient-info .primary-condition').textContent = `Primary Condition: ${patient.primary_condition}`;
 
 const ctx = document.getElementById('heartbeatChart').getContext('2d');
@@ -671,4 +677,24 @@ function populateTagList(elementId, data, type) {
 }
 }
 
+</script>
+
+<script>
+    lucide.createIcons();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Set current date only
+    const dateEl = document.getElementById('currentDate');
+    const now = new Date();
+    const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    dateEl.textContent = now.toLocaleDateString(undefined, options);
+});
 </script>

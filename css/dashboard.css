@@ -67,97 +67,86 @@ body::-webkit-scrollbar {
     min-height: 100vh;
     display: flex;
     gap: 18px; 
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
 }
 
-/* 🔮 Refined Glassmorphism Styles (Cards) */
-.card {
-    background-color: var(--card-background); 
-    border-radius: var(--border-radius-card);
-    padding: 8px 10px;
-    box-shadow: var(--shadow); 
-    /* Use new glass border and blur variable */
-    border: 1px solid var(--lighter-border); 
-    backdrop-filter: blur(var(--glass-blur)); 
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    color: var(--dark-text);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition */
-}
-.card:hover {
-    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.4);
-    transform: translateY(-2px);
-}
-.card h4 {
-    font-size: 15px;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 8px;
-    color: var(--dark-text);
-}
 
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--card-background);
-    padding: 2px 8px;    
-    margin-top: 15px;    
-    margin-bottom: 10px;      /* Slightly smaller margin */
-    border-radius: var(--border-radius-card);
-    box-shadow: var(--shadow);
-    border: 1px solid var(--lighter-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    min-height: 50px;         /* Reduced header height */
+    background: transparent;   /* Remove card background */
+    padding: 2px 8px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-radius: 0;          /* No rounded corners */
+    box-shadow: none;          /* Remove shadow */
+    border: none;              /* Remove border */
+    backdrop-filter: none;     /* Remove blur effect */
+    -webkit-backdrop-filter: none;
+    min-height: auto;          /* Let height adjust naturally */
     width: 100%;
     box-sizing: border-box;
 }
 
+.header-title {
+    font-family: 'Roboto Slab', serif;  /* Example custom font */
+    font-size: 1.8rem;                  /* Adjust size */
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    color: #0f172a;
+}
+
+
 .header-left {
     display: flex;
     flex-direction: column;
-    gap: 0;                   /* Remove extra space between texts */
+    gap: 0;                /* Flex gap won't add extra space */
 }
 
-.breadcrumbs {
-    font-size: 12px;          /* Smaller text */
-    color: var(--medium-text);
-    opacity: 0.8;
-}
-
-#greeting {
-    font-size: 20px;          /* Smaller greeting */
-    font-weight: 600;
-    margin: 0;
-    color: var(--dark-text);
+.header-left span,
+.header-left h1,
+.header-left p {
+    margin: 0;             /* Remove default margins */
+    line-height: 1.2;      /* Optional: tighten vertical spacing */
 }
 
 .date {
-    font-size: 12px;          /* Smaller date text */
+    font-size: 14px;          /* Smaller date text */
     color: var(--medium-text);
     opacity: 0.8;
+    color: #4b5563;
+    font-weight: 700;
 }
 
 .add-quick-logs-button {
-    background-color: #262fe7;
-    color: #fff;
-    padding: 6px 12px;        /* Smaller button */
-    border-radius: 10px;      /* Slightly smaller rounding */
-    text-decoration: none;
-    font-weight: 500;
+ background-color:  #262fe7;
+    color: #e8ebf1;
+    border: none;
+    padding: 8px 15px; /* Reduced padding */
+    border-radius: var(--border-radius-button);
+    font-weight: 600;
+    font-size: 13px; /* Reduced font size */
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;                 /* Smaller gap between icon and text */
-    font-size: 14px;          /* Smaller font */
-    transition: background 0.25s ease, box-shadow 0.25s ease;
-    min-width: 120px;         /* Reduce minimum width */
-    justify-content: center;
+    gap: 6px; /* Reduced gap */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    text-decoration: none;
 }
 
 .add-quick-logs-button:hover {
-    background-color: #262fe7;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.12); /* Slightly smaller shadow */
+    background-color:  #262fe7;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
 }
 
+.add-quick-logs-button i {
+    font-size: 14px; /* Reduced font size */
+}
 
 /* --------------------------------------------- */
 /* PREMIUM PATIENT CARD — MODERN & MEDICAL UI    */
@@ -210,23 +199,6 @@ body::-webkit-scrollbar {
     margin-top: 5%;
 }
 
-.header-name {
-    font-size: 1.15rem;
-    font-weight: 800;
-    line-height: 1.2;
-    margin: 0;
-    color: #0f172a;
-}
-
-.header-details {
-    font-size: 0.75rem;
-    font-weight: 500;
-    opacity: 0.85;
-    margin-top: 1px;
-    color: #0f172a;
-}
-
-
 .secured-badge {
     background-color: #29be26;
     color: white;
@@ -238,7 +210,7 @@ body::-webkit-scrollbar {
 /* Add !important to force override */
 #patientName {
     color: #0f172a !important;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     font-size: 1.15rem !important;
 }
 
@@ -320,6 +292,74 @@ body::-webkit-scrollbar {
     line-height: 1;
     color: #0f172a;
 
+}
+
+
+.metric-card {
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+
+    transition: 
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        background 0.2s ease-out;
+
+    cursor: pointer;
+    user-select: none;
+    will-change: transform, box-shadow;
+}
+
+/* Hover feel */
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+    background-color: #f7f7f7;
+}
+
+.metric-card h4 {
+    color: #4b5563; 
+    font-weight: 700; /* Optional: make it bold */
+    font-size: 14px;  /* Optional: adjust size */
+}
+
+
+
+/* ---------------------------------------------------
+   4. TEXT + METRIC VALUE ALIGNMENT
+--------------------------------------------------- */
+.metric-value-container .value {
+    line-height: 1;
+}
+
+.metric-value-container .unit {
+    font-size: 0.75rem;
+    line-height: 1;
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+.tag {
+    font-weight: 600;
+    padding: 1px 6px;
+    font-size: 0.75rem;
+    border-radius: 999px;
+}
+
+/* ---------------------------------------------------
+   5. SPARKLINE CANVAS AREA STYLING
+--------------------------------------------------- */
+.mini-sparkline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mini-sparkline canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* --- Overall Performance Card --- */
@@ -623,16 +663,17 @@ border-color: var(--primary-blue-vibrant);
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* HIDE TEXT LABELS */
-.sidebar-item > :not(i):not(.badge) {
+.sidebar-item > :not(svg):not(.badge) {
     display: none;
 }
 
+
 /* ICONS ---------------- */
-.sidebar-item i {
+.sidebar-item svg {
     /* MODIFIED: Increased size for icon prominence */
     font-size: 24px; 
     opacity: 0.85;
+    color: #0f172a;
     transition: all 0.3s ease;
 }
 
@@ -717,7 +758,6 @@ border-color: var(--primary-blue-vibrant);
 }
 
 
-
 /* ----------------------------------------------------------------- */
 /* --- Header/Tabs & Badges --- */
 /* ----------------------------------------------------------------- */
@@ -769,7 +809,7 @@ border-color: var(--primary-blue-vibrant);
     grid-template-rows: auto auto auto;
 
     /* Gap remains from your variables */
-    gap: 6px;
+    gap: 15px;
 
     /* Height behavior preserved */
     height: auto;
@@ -816,117 +856,6 @@ border-color: var(--primary-blue-vibrant);
     grid-row: 2 / 3; 
 }
 
-
-/* Patient Overview */
-.patient-overview-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.patient-overview-panel h3, .patient-overview-panel p, .patient-overview-panel .edit-icon {
-    color: white !important; /* Force white text on blue card */
-}
-.avatar-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-.avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-.patient-overview-panel h3 {
-    font-size: 16px;
-    margin: 0;
-}
-.patient-details {
-    font-size: 12px;
-    margin: 2px 0;
-}
-.edit-icon {
-    font-size: 12px;
-    margin-left: 5px;
-    cursor: pointer;
-}
-.contact-info p {
-    font-size: 12px;
-    margin: 2px 0;
-}
-
-
-/* Metric Cards */
-.metric-card {
-    text-align: center;
-    padding: 8px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.metric-card h4 i {
-    margin-left: 5px;
-    color: var(--accent-blue);
-}
-.metric-value-container {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    line-height: 1;
-}
-.metric-card .value {
-    font-size: 1.6em;
-    font-weight: 700;
-    margin: 0;
-    color: var(--primary-blue-dark); /* Color for metric values */
-}
-.metric-card .unit {
-    font-size: 0.35em;
-    font-weight: 500;
-    align-self: flex-start;
-    margin-left: 2px;
-    color: var(--dark-text);
-}
-.change {
-    font-size: 0.7em;
-    font-weight: 600;
-    margin-left: 5px;
-    align-self: flex-end;
-}
-.change.positive { color: var(--status-positive); }
-.change.negative { color: var(--status-negative); }
-.status-range {
-    font-size: 11px;
-    color: var(--medium-text);
-    margin-top: 5px;
-}
-.tag {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    font-weight: 600;
-    margin: 0 3px;
-}
-.tag.high {
-    background-color: rgba(255, 69, 96, 0.15); /* New softer red background */
-    color: var(--status-negative);
-}
-.tag.low {
-    background-color: rgba(255, 152, 0, 0.15); /* Orange background */
-    color: var(--status-warning);
-}
-.tag.normal {
-    background-color: rgba(76, 175, 80, 0.15); /* Green background */
-    color: var(--status-positive);
-}
-.mini-sparkline {
-    font-size: 10px;
-    color: var(--medium-text);
-    height: 10px;
-}
 
 /* Timeline Chart (Full Width) */
 .timeline {
@@ -1078,6 +1007,34 @@ h3, h4 {
   display: flex !important;
 }
 
+/* GLOBAL CARD STYLE — matches your metric-card look */
+.card,
+.appointments-widget,
+.overall-performance,
+.analytics-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+
+    transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        background-color 0.2s ease-out;
+
+    cursor: pointer;
+    user-select: none;
+    will-change: transform, box-shadow;
+}
+
+.card:hover,
+.appointments-widget:hover,
+.overall-performance:hover,
+.analytics-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+    background-color: var(--card-hover-bg);
+}
 
 /* ----------------------------------------------------------------- */
 /* --- Media Queries for Responsive Compactness (User's Logic Retained) --- */
@@ -1178,4 +1135,6 @@ h3, h4 {
     .metric-value-container {
         justify-content: flex-start;
     }
+
+
 }

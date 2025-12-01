@@ -30,7 +30,7 @@ body {
     align-items: center;
     height: 100vh; 
     /* Assume background image is still being used */
-    background: url('../assets/bg.jpg') no-repeat center center fixed; 
+    background: url('../assets/bg2.jpg') no-repeat center center fixed; 
     background-size: cover;
     overflow: hidden; /* CRITICAL: Prevents ALL scrolling on large screens */
     padding: 20px;
